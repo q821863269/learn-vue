@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="score">
+        <h2 v-if="score >= 90">优秀</h2>
+        <h2 v-else-if="score >= 80">良好</h2>
+        <h2 v-else>垃圾</h2>
+
+        <br>
+
+        <h2>{{result}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                score: 99
+            },
+            computed: {
+                result() {
+                    // 判断是否优秀这种情况，一般用计算属性去处理
+                    let showMessage = ''
+                    if (this.score >= 90) {
+                        showMessage = '优秀'
+                    } else if (this.score >= 80) {
+                        showMessage = '良好'
+                    } else {
+                        showMessage = '垃圾'
+                    }
+                    return showMessage
+                }
+            },
+            methods: {
+            
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <!-- 这里在切换类型的时候，input的值不会被清空
+             这是因为vue的虚拟Dom有组件复用
+
+             可以通过添加key来解决
+        -->
+
+        <span v-if="isUser">
+            <label for="username">用户账号</label>
+            <input type="text" id="username" placeholder="username" key="username">
+        </span>
+        <span v-else>
+            <label for="email">用户邮箱</label>
+            <input type="text" id="email" placeholder="email" key="email">
+        </span>
+        <button @click="changeType">切换类型</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                isUser: true,
+            },
+            methods: {
+                changeType() {
+                    this.isUser = !this.isUser;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
