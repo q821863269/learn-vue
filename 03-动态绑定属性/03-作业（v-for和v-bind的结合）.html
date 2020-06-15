@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 作业需求：点击列表中的哪一项，name该项的文字变成红色 -->
+    <div id="app">
+        <ul>
+            <li @click="getClasses(index)" v-for="(item,index) in movies" :class="{active : currentIndex === index}">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                movies: ['大主宰', '好运来', '哈哈哈', '大黄蜂'],
+                currentIndex: -1
+            },
+            methods: {
+                getClasses(index) {
+                    this.currentIndex = index
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+    <style>
+        .active {
+            color: red;
+        }
+
+        .line {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2 :class="active">{{message}}</h2>
+        <h2 :class="active">{{message}}</h2>
+
+        <h2 :class="{active: isActive, line: isLine}">{{message}}</h2>
+        <button @click="changeColor">变色</button>
+        <button @click="changeLine">加线</button>
+
+        <h2 :class="[active, line]">{{message}}</h2>
+
+        <h2 :class="['active', 'heihei']">{{message}}</h2>
+
+        <h2 :class="getClasses()">{{message}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '你好啊',
+                active: 'active',
+                line: 'line',
+                isActive: true,
+                isLine: true
+            },
+            methods: {
+                changeColor: function() {
+                    this.isActive = !this.isActive
+                },
+                changeLine: function() {
+                    this.isLine = !this.isLine
+                },
+                getClasses: function() {
+                    return [this.active, this.line];
+                }
+            }
+        })
+    </script>
+</body>
+</html>

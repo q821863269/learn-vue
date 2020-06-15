@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <div style="background-color: red;" @click="divClick">
+            <!-- @click.stop阻止事件冒泡 -->
+            <button @click.stop="btnClick">按钮</button>
+        </div>
+
+        <br>
+
+        <!-- @click.prevent阻止默认事件 -->
+        <form action="baidu">
+            <input type="submit" value="提交" @click.prevent="submitClick">
+        </form>
+
+        <br>
+
+        <!-- 键盘监听 -->
+        <input type="text" @keyup="keyClick">
+
+        <br>
+        
+        <input type="text" @keyup.enter="enterClick">
+
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+            
+            },
+            methods: {
+                divClick() {
+                    console.log('div')
+                },
+                btnClick() {
+                    console.log('btn')
+                },
+                submitClick() {
+                    console.log('click')
+                },
+                keyClick() {
+                    console.log('666')
+                },
+                enterClick() {
+                    console.log('enter')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

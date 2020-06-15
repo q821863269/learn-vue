@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 用法和:class类似 -->
+        <h2 :style="{fontSize: fontSize + 'px', backgroundColor: color}">{{message}}</h2>
+        <button @click="add">+</button>
+        <button @click="minus">-</button>
+
+        <h2 :style="[style1, style2]">{{message}}</h2>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: '你好呀',
+                fontSize: 10,
+                color: 'red',
+                style1: {
+                    fontSize: '10px'
+                },
+                style2: {
+                    backgroundColor: 'red'
+                }
+            },
+            methods: {
+                add: function() {
+                    this.fontSize++;
+                },
+                minus: function() {
+                    this.fontSize--;
+                }
+            }
+        })
+    </script>
+</body>
+</html>
