@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in letters" :key="item">{{index+1}}.{{item}}</li>
+        </ul>
+        <button @click="add">add</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                letters: ['A','B','C']
+            },
+            methods: {
+                add() {
+                    this.letters.splice(1,0,'D');
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in array">{{index+1}}.{{item}}</li>
+        </ul>
+
+        <ul>
+            <li v-for="(val,key,index) in obj">{{index+1}}---{{key}}---{{val}}</li>
+        </ul>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                array: ['a','b','c'],
+                obj: {
+                    a: 'aaa',
+                    b: 'bbb',
+                    c: 'ccc'
+                }
+            },
+            methods: {
+            
+            }
+        })
+    </script>
+</body>
+</html>
