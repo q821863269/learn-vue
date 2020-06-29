@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in letters">{{index+1}}.{{item}}</li>
+        </ul>
+        <button @click="add">add</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                letters: ['A','B','C']
+            },
+            methods: {
+                add() {
+                    //this.letters.splice(1,0,'7');
+                    //this.letters.push('D');
+
+                    // 这个有问题
+                    //this.letters[0]='D';
+
+                    /**
+                     * push()
+                     * pop()
+                     * shift()
+                     * unshift()
+                     * splice()
+                     * sort()
+                     * reverse()
+                     */
+
+                    Vue.set(this.letters, 0, 'D');
+                }
+            }
+        })
+    </script>
+</body>
+</html>
