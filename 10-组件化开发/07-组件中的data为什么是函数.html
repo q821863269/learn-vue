@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+<body>
+    <div id="app">
+        <jsq></jsq>
+        <jsq></jsq>
+    </div>
+
+    <template id="jsq">
+        <div>
+            <h2>当前计数：{{counter}}</h2>
+            <button @click="minus">-</button>
+            <button @click="add">+</button>
+        </div>
+    </template>
+    <script src="../js/vue.js"></script>
+    <script>
+        // 1.注册组件
+        Vue.component('jsq', {
+            template: '#jsq',
+            // 这里用函数的原因是，能避免不同组件，使用的是自己的counter
+            data() {
+                return {
+                    counter: 0
+                }
+            },
+            methods: {
+                add() {
+                    this.counter++;
+                },
+                minus() {
+                    this.counter--;
+                }
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                
+            },
+            methods: {
+            
+            }
+        })
+    </script>
+</body>
+</html>
