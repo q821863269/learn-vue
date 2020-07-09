@@ -1,12 +1,20 @@
 const path = require('path')
+// 处理vue-loader打包出错
+const vueLoaderPlugin = require('vue-loader/lib/plugin')
+// 设置打包js的banner
+const webpack = require('webpack')
+// 打包html
+const htmlWebpackPlugin = require('html-webpack-plugin')
+// 丑化压缩代码
+const uglifyjsWebpackPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'bundle.js',
+        filename: 'bundle.js'
         // 在公共资源前面会加上publicPath
-        publicPath: 'dist/'
+        //publicPath: 'dist/'
     },
     module: {
         rules: [
@@ -50,7 +58,27 @@ module.exports = {
                         presets: ['es2015']
                     }
                 }
+            },
+            {
+                test: /\.vue$/,
+                use: ['vue-loader']
             }
         ]
+    },
+    plugins: [
+        new vueLoaderPlugin(),
+        new webpack.BannerPlugin('最终版权归null所有'),
+        new htmlWebpackPlugin({
+            template: 'index.html'
+        }),
+        new uglifyjsWebpackPlugin()
+    ],
+    // 解决路径问题
+    resolve: {
+        // alias: 别名配置
+        extensions: ['.js', '.css', '.vue'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        }
     }
 }
