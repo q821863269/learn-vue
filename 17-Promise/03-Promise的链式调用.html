@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+
+<body>
+    <script>
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('aaa')
+            }, 1000)
+        }).then((data) => {
+            console.log(data)
+            console.log('第一层处理')
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(data + '111')
+                }, 1000)
+            })
+        }).then((data) => {
+            console.log(data)
+            console.log('第二层处理')
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(data + '222')
+                }, 1000)
+            })
+        }).then((data) => {
+            console.log(data)
+        })
+
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('aaa')
+            }, 1000)
+        }).then((data) => {
+            console.log(data)
+            console.log('第一层处理')
+            // return Promise.reject(data + '111')
+            return Promise.resolve(data + '111')
+        }).then((data) => {
+            console.log(data)
+            console.log('第二层处理')
+            // return Promise.reject(data + '222')
+            return Promise.resolve(data + '222')
+        }).then((data) => {
+            console.log(data)
+        })
+
+        // 省略掉Promise.resolve
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('aaa')
+            }, 1000)
+        }).then((data) => {
+            console.log(data)
+            console.log('第一层处理')
+            // throw 'error message'
+            return data + '111'
+        }).then((data) => {
+            console.log(data)
+            console.log('第二层处理')
+            // throw 'error message'
+            return data + '222'
+        }).then((data) => {
+            console.log(data)
+        })        
+    </script>
+</body>
+
+</html>

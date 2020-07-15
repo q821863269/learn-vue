@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue</title>
+</head>
+
+<body>
+    <script>
+        new Promise((resolve, reject) => {
+            setTimeout(() => {
+                // 成功的时候调用resolve
+                // resolve('HaHa')
+
+                // 失败的时候调用reject
+                reject('i am error message')
+            }, 1000)
+        }).then(data => {
+            console.log(data)
+        }, err => {
+            console.log(err)
+        })
+    </script>
+</body>
+
+</html>
