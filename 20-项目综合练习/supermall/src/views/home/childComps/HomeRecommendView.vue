@@ -24,13 +24,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .recommend {
   display: flex;
   width: 100%;
   text-align: center;
   font-size: 12px;
-  padding: 10px 0 20px;
+  padding: 10px 0 15px;
 
   border-bottom: 8px solid #eee;
 }
