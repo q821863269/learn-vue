@@ -29,10 +29,13 @@ export default {
   },
   methods: {
     scrollTo(x, y, time = 1000) {
-      this.scroll.scrollTo(x, y, time);
+      this.scroll && this.scroll.scrollTo(x, y, time);
     },
     finishPullUp() {
-      this.scroll.finishPullUp();
+      this.scroll && this.scroll.finishPullUp();
+    },
+    scrollRefreshHeight() {
+      this.scroll && this.scroll.refresh();
     }
   },
   mounted() {

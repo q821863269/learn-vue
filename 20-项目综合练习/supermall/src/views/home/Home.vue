@@ -36,6 +36,8 @@ import BackTop from "components/content/backTop/BackTop";
 
 import homeApi from "network/home";
 
+import {debounce} from 'common/utils'
+
 export default {
   name: "Home",
   components: {
@@ -85,6 +87,7 @@ export default {
       homeApi.getHomeGoods(type, page).then(res => {
         this.goods[type].page = page;
         this.goods[type].list.push(...res.data.list);
+        // 完成上拉加载更多
         this.$refs.scroll.finishPullUp();
       });
     },
@@ -111,14 +114,22 @@ export default {
       this.backTopShow = -position.y > 1000;
     },
     loadMoreData() {
-      console.log('触发上拉加载更多。。。')
+      console.log("触发上拉加载更多。。。");
       this.getHomeGoods(this.currentTabType);
-    }
+    },
   },
   computed: {
     showGoods() {
       return this.goods[this.currentTabType].list;
     }
+  },
+  mounted() {
+    const refresh = debounce(this.$refs.scroll.scrollRefreshHeight, 100);
+    // 监听GoodListItem的图片加载完成事件
+    this.$bus.$on("itemImageLoad", () => {
+      // 执行返回函数
+      refresh();
+    });
   },
   created() {
     this.getHomeMultidata();
