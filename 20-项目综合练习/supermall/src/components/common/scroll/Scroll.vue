@@ -24,7 +24,10 @@ export default {
   },
   data() {
     return {
-      scroll: null
+      scroll: null,
+      pollUpOption: {
+        threshold: 400
+      }
     };
   },
   methods: {
@@ -36,6 +39,9 @@ export default {
     },
     scrollRefreshHeight() {
       this.scroll && this.scroll.refresh();
+    },
+    getScrollY() {
+      return this.scroll ? this.scroll.y : 0;
     }
   },
   mounted() {
@@ -43,7 +49,7 @@ export default {
     this.scroll = new BScroll(this.$refs.wrapper, {
       click: true,
       probeType: this.probeType,
-      pullUpLoad: this.pullUpLoad
+      pullUpLoad: this.pullUpLoad == true ? this.pollUpOption : false
     });
 
     // 监听滚动的位置
