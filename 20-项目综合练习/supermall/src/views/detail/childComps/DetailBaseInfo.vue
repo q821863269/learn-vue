@@ -26,6 +26,9 @@ export default {
   props: {
     goods: {
       type: Object,
+      default() {
+        return {}
+      }
     },
   },
   methods: {

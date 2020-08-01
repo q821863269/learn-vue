@@ -43,7 +43,7 @@ import BackTop from "components/content/backTop/BackTop";
 
 import homeApi from "network/home";
 
-import { debounce } from "common/utils";
+import { itemListenerMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -55,8 +55,9 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop
+    BackTop,
   },
+  mixins: [itemListenerMixin],
   data() {
     return {
       banners: [],
@@ -64,22 +65,22 @@ export default {
       goods: {
         pop: {
           page: 0,
-          list: []
+          list: [],
         },
         new: {
           page: 0,
-          list: []
+          list: [],
         },
         sell: {
           page: 0,
-          list: []
-        }
+          list: [],
+        },
       },
       currentTabType: "pop",
       backTopShow: false,
       tabOffsetTop: 0,
       tabControlIsShow: false,
-      saveY: 0
+      saveY: 0,
     };
   },
   methods: {
@@ -87,14 +88,14 @@ export default {
      * 网络请求相关
      */
     getHomeMultidata() {
-      homeApi.getHomeMultidata().then(res => {
+      homeApi.getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
       });
     },
     getHomeGoods(type) {
       const page = this.goods[type].page + 1;
-      homeApi.getHomeGoods(type, page).then(res => {
+      homeApi.getHomeGoods(type, page).then((res) => {
         this.goods[type].page = page;
         this.goods[type].list.push(...res.data.list);
         // 完成上拉加载更多
@@ -136,27 +137,30 @@ export default {
     swiperImageLoad() {
       // 获取tabControl的offsetTop
       this.tabOffsetTop = this.$refs.tabControl2.$el.offsetTop;
-    }
+    },
   },
   computed: {
     showGoods() {
       return this.goods[this.currentTabType].list;
-    }
+    },
   },
   mounted() {
+    // 这一块已经改为使用混入
     // 图片加载完成的事件监听
-    const refresh = debounce(this.$refs.scroll.scrollRefreshHeight, 100);
-    this.$bus.$on("itemImageLoad", () => {
-      // 执行返回函数
-      refresh();
-    });
+    //const refresh = debounce(this.$refs.scroll.scrollRefreshHeight, 100);
+    //this.$bus.$on("itemImageLoad", () => {
+    // 执行返回函数
+    //refresh();
+    //});
   },
   activated() {
     this.$refs.scroll.scrollTo(0, this.saveY, 0);
-    this.$refs.scroll.scrollRefreshHeight()
+    this.$refs.scroll.scrollRefreshHeight();
   },
   deactivated() {
     this.saveY = this.$refs.scroll.getScrollY();
+
+    this.$bus.$off("itemImageLoad", this.itemImgListener);
   },
   created() {
     this.getHomeMultidata();
@@ -164,7 +168,7 @@ export default {
     this.getHomeGoods("pop");
     this.getHomeGoods("new");
     this.getHomeGoods("sell");
-  }
+  },
 };
 </script>
 
