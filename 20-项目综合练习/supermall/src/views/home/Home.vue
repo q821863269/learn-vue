@@ -43,7 +43,7 @@ import BackTop from "components/content/backTop/BackTop";
 
 import homeApi from "network/home";
 
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -55,9 +55,8 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop,
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       banners: [],
@@ -77,7 +76,6 @@ export default {
         },
       },
       currentTabType: "pop",
-      backTopShow: false,
       tabOffsetTop: 0,
       tabControlIsShow: false,
       saveY: 0,
@@ -120,15 +118,11 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
       this.$refs.tabControl2.currentIndex = index;
     },
-    backTopClick() {
-      this.$refs.scroll.scrollTo(0, 0);
-    },
     contentScroll(position) {
-      // 判断BackTop是否显示
-      this.backTopShow = -position.y > 1000;
-
       // 判断TabControl是否吸顶
       this.tabControlIsShow = -position.y > this.tabOffsetTop;
+      //监听是否显示backTop
+      this.listenShowBackTop(position);
     },
     loadMoreData() {
       console.log("触发上拉加载更多。。。");

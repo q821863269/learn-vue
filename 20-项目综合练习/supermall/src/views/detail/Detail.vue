@@ -16,6 +16,8 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <goods-list ref="recommend" :goods="recommendList" />
     </scroll>
+    <detail-bottom-bar @addToCart="addToCart" />
+    <back-top v-show="backTopShow" @click.native="backTopClick" />
   </div>
 </template>
 <script>
@@ -26,8 +28,10 @@ import DetailShopInfo from "./childComps/DetailShopInfo";
 import DetailGoodsInfo from "./childComps/DetailGoodsInfo";
 import DetailParamInfo from "./childComps/DetailParamInfo";
 import DetailCommentInfo from "./childComps/DetailCommentInfo";
+import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
+import BackTop from "components/content/backTop/BackTop";
 import GoodsList from "components/content/goods/GoodsList.vue";
 
 import {
@@ -39,7 +43,7 @@ import {
 } from "network/detail";
 
 import { debounce } from "common/utils";
-import { itemListenerMixin } from "common/mixin";
+import { itemListenerMixin, backTopMixin } from "common/mixin";
 
 export default {
   name: "Detail",
@@ -51,10 +55,11 @@ export default {
     DetailGoodsInfo,
     DetailParamInfo,
     DetailCommentInfo,
+    DetailBottomBar,
     Scroll,
     GoodsList,
   },
-  mixins: [itemListenerMixin],
+  mixins: [itemListenerMixin, backTopMixin],
   data() {
     return {
       iid: null,
@@ -120,6 +125,8 @@ export default {
     contentScroll(position) {
       //监听滚动到哪一个主题
       this._listenScrollTheme(-position.y);
+      //监听是否显示backTop
+      this.listenShowBackTop(position);
     },
     _listenScrollTheme(position) {
       let length = this.themeTopYs.length;
@@ -145,6 +152,17 @@ export default {
           break;
         }
       }
+    },
+    addToCart() {
+      // 1.获取购物车需要展示的商品信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goods.title;
+      product.desc = this.goods.desc;
+      product.price = this.goods.nowPrice;
+      product.iid = this.iid;
+
+      this.$store.dispatch("addToCart", product);
     },
   },
   created() {
@@ -183,6 +201,6 @@ export default {
 }
 
 .content {
-  height: calc(100% - 40px);
+  height: calc(100% - 40px - 49px);
 }
 </style>
